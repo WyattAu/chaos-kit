@@ -1,0 +1,55 @@
+[package]
+name = "chaos-kit"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Deterministic fault injection for Rust tests — latency, errors, partitions, and resource starvation with seeded scheduling"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/WyattAu/chaos-kit"
+keywords = ["chaos", "testing", "fault-injection", "tower", "tokio"]
+categories = ["development-tools::testing"]
+exclude = [".github/", "benches/"]
+
+[features]
+default = ["tower", "tokio-test"]
+tower = ["dep:tower", "dep:tokio", "tokio/time", "dep:pin-project-lite"]
+tokio-test = ["dep:tokio", "tokio/time", "tokio/rt", "tokio/test-util"]
+
+[dependencies]
+tower = { version = "0.5", default-features = false, optional = true }
+tokio = { version = "1", default-features = false, features = ["time"], optional = true }
+pin-project-lite = { version = "0.2", optional = true }
+
+[dev-dependencies]
+criterion = "0.7"
+proptest = "1"
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "time"] }
+
+[[bench]]
+name = "chaos_bench"
+harness = false
+
+[[test]]
+name = "tower_faults"
+required-features = ["tower"]
+
+[[test]]
+name = "clock"
+required-features = ["tokio-test"]
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "deny"
+
+[lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+indexing_slicing = "deny"
+undocumented_unsafe_blocks = "deny"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
