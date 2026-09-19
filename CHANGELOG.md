@@ -3,6 +3,35 @@
 All notable changes to this project are documented here. Format: [Keep a
 Changelog](https://keepachangelog.com/) — versions follow [semver](https://semver.org).
 
+## [0.1.1] - 2026-09-19
+
+### Added
+
+- **`chaos_layer_map(schedule, map)`** — the error-mapping bridge for
+  services whose error type cannot absorb `ChaosError`
+  (`S::Error: From<ChaosError>` does not hold). Each injected fault goes
+  through `map: Fn(ChaosError) -> Result<S::Response, S::Error>`:
+  - return `Ok(response)` to fold the fault into a real response — this
+    is the **axum** story, where `Router` services are `Infallible` and
+    an injected error can never propagate: map it to a 503-style
+    response and `Router::layer` / `route_service` accept the result
+    directly,
+  - return `Err(error)` to propagate as your own error type — for error
+    enums without a `#[from] ChaosError` variant, or types you do not
+    own.
+  Ships with `ChaosMakeMapLayer`, `ChaosMapLayer`, and `ChaosMapFuture`
+  (`tower` feature, same as `chaos_layer`); scheduling, cloning, and
+  recorder semantics match `chaos_layer`.
+- Documented axum caveat: handler routes (`get(handler)`) re-materialize
+  the layered service per request, restarting the call index — attach
+  via `Router::route_service` for index-exact scheduling across requests
+  (the docs show both patterns).
+- New `axum_bridge` integration test: scripted `Fault::Error` and
+  `Fault::Partition` through an axum `Router` surface as 503 responses
+  carrying the chaos reason, clean indices pass through untouched, and
+  the recorder counts every applied fault (axum is a dev-dependency
+  only; chaos-kit itself grows no dependency).
+
 ## [0.1.0] - 2026-09-15
 
 ### Added

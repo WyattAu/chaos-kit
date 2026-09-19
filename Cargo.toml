@@ -1,6 +1,6 @@
 [package]
 name = "chaos-kit"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.85"
 description = "Deterministic fault injection for Rust tests — latency, errors, partitions, and resource starvation with seeded scheduling"
@@ -21,9 +21,11 @@ tokio = { version = "1", default-features = false, features = ["time"], optional
 pin-project-lite = { version = "0.2", optional = true }
 
 [dev-dependencies]
+axum = "0.8"
 criterion = "0.7"
 proptest = "1"
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "time"] }
+tower = { version = "0.5", features = ["util"] }
 
 [[bench]]
 name = "chaos_bench"
@@ -31,6 +33,10 @@ harness = false
 
 [[test]]
 name = "tower_faults"
+required-features = ["tower"]
+
+[[test]]
+name = "axum_bridge"
 required-features = ["tower"]
 
 [[test]]

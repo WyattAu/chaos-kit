@@ -12,7 +12,10 @@ every run, on every machine.
   ingress/egress partitions, seeded throttling, CPU-starvation busy-spin.
 - **Tower middleware** (default): `chaos_layer(schedule)` wraps any
   `tower::Service`; faults apply per request index, errors surface through
-  `S::Error: From<ChaosError>`.
+  `S::Error: From<ChaosError>`. For services whose error type cannot
+  absorb `ChaosError` — axum's `Infallible` routers, foreign error enums —
+  `chaos_layer_map(schedule, map)` hands each fault to your closure:
+  map it to a response (the axum bridge) or your own error.
 - **Frozen clock** (default): `PausableClock` pauses tokio time so a
   one-hour latency fault is instant and exact — with loud panics when used
   outside a `#[tokio::test]`.
@@ -106,7 +109,7 @@ small allocation per call for a single code path.
 
 | Feature | Default | Description |
 |---|---|---|
-| `tower` | yes | `chaos_layer(schedule)` → `tower::Layer`; `ChaosLayer` service |
+| `tower` | yes | `chaos_layer(schedule)` / `chaos_layer_map(schedule, map)` → `tower::Layer`; `ChaosLayer` service |
 | `tokio-test` | yes | `PausableClock` — frozen tokio time for tests |
 
 The no-feature build is dependency-free (faults, schedules, recorder).

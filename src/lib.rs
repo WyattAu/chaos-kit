@@ -55,7 +55,7 @@
 //!
 //! | Feature | Default | Description |
 //! |---|---|---|
-//! | `tower` | yes | [`chaos_layer`] / [`ChaosLayer`] middleware for `tower::Service` |
+//! | `tower` | yes | [`chaos_layer`] / [`ChaosLayer`] middleware for `tower::Service`, plus [`chaos_layer_map`] for error types that cannot absorb [`ChaosError`] |
 //! | `tokio-test` | yes | [`PausableClock`] for frozen tokio time in tests |
 //!
 //! The default build with no features is dependency-free: schedules,
@@ -75,7 +75,10 @@ pub use schedule::ChaosSchedule;
 #[cfg(feature = "tower")]
 mod tower_layer;
 #[cfg(feature = "tower")]
-pub use tower_layer::{chaos_layer, ChaosFuture, ChaosLayer, ChaosMakeLayer};
+pub use tower_layer::{
+    chaos_layer, chaos_layer_map, ChaosFuture, ChaosLayer, ChaosMakeLayer, ChaosMakeMapLayer,
+    ChaosMapFuture, ChaosMapLayer,
+};
 
 #[cfg(feature = "tokio-test")]
 mod clock;
