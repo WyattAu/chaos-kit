@@ -59,10 +59,6 @@ version = "1.12.1"
 criteria = "safe-to-run"
 notes = "Dev-only via the axum test graph; no certification for 1.12.1 yet."
 
-[[exemptions.chaos-kit]]
-version = "0.1.0"
-criteria = "safe-to-deploy"
-
 [[exemptions.clap]]
 version = "4.6.7"
 criteria = "safe-to-run"
