@@ -1,4 +1,5 @@
 # chaos-kit
+[![Estate integration](https://github.com/WyattAu/estate-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/WyattAu/estate-integration/actions/workflows/ci.yml)
 
 Deterministic fault injection for Rust tests — latency, errors, partitions,
 throttling, and CPU starvation with seeded scheduling. The estate's
