@@ -1,9 +1,9 @@
 [package]
 name = "chaos-kit"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 rust-version = "1.85"
-description = "Deterministic fault injection for Rust tests — latency, errors, partitions, and resource starvation with seeded scheduling"
+description = "Deterministic fault injection for Rust tests: latency, errors, partitions, and resource starvation with seeded scheduling"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/WyattAu/chaos-kit"
 keywords = ["chaos", "testing", "fault-injection", "tower", "tokio"]
