@@ -1,31 +1,31 @@
 # chaos-kit
 [![Estate integration](https://github.com/WyattAu/estate-integration/actions/workflows/ci.yml/badge.svg)](https://github.com/WyattAu/estate-integration/actions/workflows/ci.yml)
 
-Deterministic fault injection for Rust tests — latency, errors, partitions,
+Deterministic fault injection for Rust tests; latency, errors, partitions,
 throttling, and CPU starvation with seeded scheduling. The estate's
 in-process chaos tool: **same seed + same call sequence = same chaos**, on
 every run, on every machine.
 
 - **Deterministic schedules**: `ChaosSchedule` maps call indices to faults
-  as a pure function of index + seed. SplitMix64 is inlined — no RNG
+  as a pure function of index + seed. SplitMix64 is inlined; no RNG
   dependency, frozen stream.
 - **Fault model**: latency (tokio virtual time), scripted errors,
   ingress/egress partitions, seeded throttling, CPU-starvation busy-spin.
 - **Tower middleware** (default): `chaos_layer(schedule)` wraps any
   `tower::Service`; faults apply per request index, errors surface through
   `S::Error: From<ChaosError>`. For services whose error type cannot
-  absorb `ChaosError` — axum's `Infallible` routers, foreign error enums —
+  absorb `ChaosError`; axum's `Infallible` routers, foreign error enums -
   `chaos_layer_map(schedule, map)` hands each fault to your closure:
   map it to a response (the axum bridge) or your own error.
 - **Frozen clock** (default): `PausableClock` pauses tokio time so a
-  one-hour latency fault is instant and exact — with loud panics when used
+  one-hour latency fault is instant and exact; with loud panics when used
   outside a `#[tokio::test]`.
 - **Lock-free recorder**: per-`FaultKind` relaxed-atomic counters for
   exact post-scenario assertions.
 - **`#![forbid(unsafe_code)]`, `#![deny(missing_docs)]`**, clippy
   `unwrap_used`/`expect_used`/`panic`/`indexing_slicing` denied.
 
-## Scope — in-process only, on purpose
+## Scope: in-process only, on purpose
 
 chaos-kit injects at the *application middleware* layer and makes
 **in-process tests** deterministic. It will never schedule real
@@ -103,7 +103,7 @@ see `benches/chaos_bench.rs`:
 | `ChaosLayer` call, empty schedule | hot | index bump + rule scan + forward |
 | latency/forward faults | hot | one boxed `Sleep` + boxed inner future |
 
-This is test tooling, not a production hot path — the layer trades a
+This is test tooling, not a production hot path; the layer trades a
 small allocation per call for a single code path.
 
 ## Feature flags
@@ -111,7 +111,7 @@ small allocation per call for a single code path.
 | Feature | Default | Description |
 |---|---|---|
 | `tower` | yes | `chaos_layer(schedule)` / `chaos_layer_map(schedule, map)` → `tower::Layer`; `ChaosLayer` service |
-| `tokio-test` | yes | `PausableClock` — frozen tokio time for tests |
+| `tokio-test` | yes | `PausableClock`; frozen tokio time for tests |
 
 The no-feature build is dependency-free (faults, schedules, recorder).
 

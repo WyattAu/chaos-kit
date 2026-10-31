@@ -1,4 +1,4 @@
-# Security Policy — chaos-kit
+# Security Policy: chaos-kit
 
 ## Supported versions
 
@@ -26,11 +26,11 @@ integrators:
   allocates per call, and `Fault::Cpu` deliberately busy-spins a core.
   Gate chaos wiring behind `#[cfg(test)]` or test-only constructors.
 - `PausableClock` panics loudly outside a current-thread tokio test
-  runtime — treat that panic as a signal that chaos leaked out of the
+  runtime; treat that panic as a signal that chaos leaked out of the
   test runtime, not a bug to suppress.
 - No secrets, no network access, no filesystem access: the crate has no
   I/O surface, and the no-feature build is dependency-free.
-- `#![forbid(unsafe_code)]` — no unsafe blocks exist in this crate.
+- `#![forbid(unsafe_code)]`; no unsafe blocks exist in this crate.
 
 [GitHub security advisories]:
     https://github.com/WyattAu/chaos-kit/security/advisories/new
