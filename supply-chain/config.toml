@@ -108,10 +108,6 @@ version = "0.3.34"
 criteria = "safe-to-run"
 notes = "Dev-only; no certification for 0.3.34 yet."
 
-[[exemptions.futures-core]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-
 [[exemptions.futures-task]]
 version = "0.3.34"
 criteria = "safe-to-deploy"
@@ -119,10 +115,6 @@ criteria = "safe-to-deploy"
 [[exemptions.futures-util]]
 version = "0.3.34"
 criteria = "safe-to-deploy"
-
-[[exemptions.getrandom]]
-version = "0.4.3"
-criteria = "safe-to-run"
 
 [[exemptions.half]]
 version = "2.7.1"
@@ -309,11 +301,6 @@ criteria = "safe-to-run"
 version = "3.0.5"
 criteria = "safe-to-deploy"
 
-[[exemptions.sync_wrapper]]
-version = "1.0.2"
-criteria = "safe-to-deploy"
-notes = "Runtime dep via tower; also dev-only via axum."
-
 [[exemptions.tokio]]
 version = "1.53.1"
 criteria = "safe-to-deploy"
@@ -338,11 +325,6 @@ criteria = "safe-to-deploy"
 version = "0.1.44"
 criteria = "safe-to-deploy"
 notes = "Runtime dep; no certification for 0.1.44 yet."
-
-[[exemptions.tracing-core]]
-version = "0.1.36"
-criteria = "safe-to-deploy"
-notes = "Runtime dep; no certification for 0.1.36 yet."
 
 [[exemptions.unicode-ident]]
 version = "1.0.24"
